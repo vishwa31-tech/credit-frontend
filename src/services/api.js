@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const API_BASE = 'https://credit-backend-0uxd.onrender.com/api';
+export const API_BASE = 'https://credit-backend-1-ripz.onrender.com/api';
 
 const getAuthHeaders = () => {
   const token = localStorage.getItem('token');
