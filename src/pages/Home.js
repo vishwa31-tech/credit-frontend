@@ -121,6 +121,28 @@ export default function Home() {
           ))}
         </div>
       </section>
+
+      <section className="py-20 px-4 bg-gradient-to-br from-purple-700 via-fuchsia-600 to-pink-500 text-white">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="text-6xl mb-6">🚀</div>
+          <h2 className="text-4xl md:text-5xl font-bold mb-6">Ready to Become a Partner?</h2>
+          <p className="text-xl text-white/90 mb-4">
+            Unlock new revenue streams and reach thousands of event organizers and businesses on EventHub.
+          </p>
+          <p className="text-lg text-white/80 mb-10">
+            Choose from multiple partnership opportunities in catering, decoration, photography, venue management, event organization, and more.
+          </p>
+          <Link 
+            to="/role-selection" 
+            className="inline-flex items-center justify-center rounded-full bg-white px-10 py-4 text-xl font-bold text-purple-700 shadow-2xl shadow-purple-900/30 hover:scale-105 transition"
+          >
+            Start Your Partnership Journey →
+          </Link>
+          <p className="text-white/70 text-sm mt-6">
+            ✓ Free to apply • ✓ Quick approval • ✓ Instant dashboard access • ✓ 24-48 hour review
+          </p>
+        </div>
+      </section>
     </div>
   );
 }

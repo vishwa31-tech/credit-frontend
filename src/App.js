@@ -17,13 +17,24 @@ import JobDetail from './pages/JobDetail';
 import AdminPanel from './pages/AdminPanel';
 import News from './pages/News';
 import NewsDetail from './pages/NewsDetail';
+import RoleSelection from './pages/RoleSelection';
+import RoleForm from './pages/RoleForm';
+import PendingApproval from './pages/PendingApproval';
+import PartnerDashboard from './pages/PartnerDashboard';
+import ApplicationRejected from './pages/ApplicationRejected';
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter
+      future={{
+        v7_startTransition: true,
+        v7_relativeSplatPath: true,
+      }}
+    >
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/home" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/events" element={<Events />} />
@@ -38,6 +49,12 @@ function App() {
         <Route path="/admin" element={<AdminPanel />} />
         <Route path="/news" element={<News />} />
         <Route path="/news/:id" element={<NewsDetail />} />
+        {/* Multi-role registration routes */}
+        <Route path="/role-selection" element={<RoleSelection />} />
+        <Route path="/role-form/:role" element={<RoleForm />} />
+        <Route path="/pending-approval" element={<PendingApproval />} />
+        <Route path="/application-rejected" element={<ApplicationRejected />} />
+        <Route path="/partner-dashboard" element={<PartnerDashboard />} />
       </Routes>
       <Footer />
     </BrowserRouter>
