@@ -30,8 +30,8 @@ export const jobService = {
 
 export const registrationService = {
   create: (data) => axios.post(`${API_BASE}/registrations`, data, { headers: getAuthHeaders() }),
-  getMyRegistrations: () => axios.get(`${API_BASE}/registrations/my-registrations`, { headers: getAuthHeaders() }),
-  cancel: (id) => axios.put(`${API_BASE}/registrations/${id}/cancel`, {}, { headers: getAuthHeaders() }),
+  getMyRequests: () => axios.get(`${API_BASE}/registrations/my-requests`, { headers: getAuthHeaders() }),
+  withdraw: (id) => axios.delete(`${API_BASE}/registrations/${id}`, { headers: getAuthHeaders() }),
 };
 
 export const adminService = {

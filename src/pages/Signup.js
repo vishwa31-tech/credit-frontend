@@ -12,7 +12,6 @@ export default function Signup() {
     confirmPassword: '',
     phone: '',
     city: '',
-    role: 'user',
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -64,38 +63,9 @@ export default function Signup() {
     <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-md bg-white rounded-xl shadow-2xl p-8">
         <h1 className="text-3xl font-bold text-gray-800 mb-2 text-center">
-          {formData.role === 'admin' ? 'Admin Registration' : formData.role === 'vendor' ? 'Event Owner Registration' : 'Customer Registration'}
+          Create Your EventHub Account
         </h1>
-        <p className="text-gray-600 text-center mb-6">Choose your account type and register to browse events, manage listings, or administer the platform.</p>
-
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-          <button
-            type="button"
-            onClick={() => setFormData(prev => ({ ...prev, role: 'user' }))}
-            className={`w-full rounded-2xl border px-5 py-4 text-left transition ${formData.role === 'user' ? 'border-purple-500 bg-purple-50' : 'border-gray-200 bg-white hover:bg-gray-50'}`}
-          >
-            <p className="text-sm uppercase tracking-[0.2em] text-purple-600 font-bold mb-2">Customer</p>
-            <p className="text-gray-700">Browse events, choose the best option, and register easily.</p>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setFormData(prev => ({ ...prev, role: 'vendor' }))}
-            className={`w-full rounded-2xl border px-5 py-4 text-left transition ${formData.role === 'vendor' ? 'border-purple-500 bg-purple-50' : 'border-gray-200 bg-white hover:bg-gray-50'}`}
-          >
-            <p className="text-sm uppercase tracking-[0.2em] text-purple-600 font-bold mb-2">Event Owner</p>
-            <p className="text-gray-700">Create and manage event listings for your customers.</p>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setFormData(prev => ({ ...prev, role: 'admin' }))}
-            className={`w-full rounded-2xl border px-5 py-4 text-left transition ${formData.role === 'admin' ? 'border-purple-500 bg-purple-50' : 'border-gray-200 bg-white hover:bg-gray-50'}`}
-          >
-            <p className="text-sm uppercase tracking-[0.2em] text-purple-600 font-bold mb-2">Admin</p>
-            <p className="text-gray-700">Manage the platform, review events, jobs, and registrations.</p>
-          </button>
-        </div>
+        <p className="text-gray-600 text-center mb-6">Register once and then choose your partner role after login from the role application page.</p>
 
         {error && (
           <div className="bg-red-100 text-red-800 p-4 rounded-lg mb-6">
@@ -156,18 +126,8 @@ export default function Signup() {
           </div>
 
           <div>
-            <label className="block text-gray-700 font-semibold mb-1">Registration Type</label>
-            <select
-              name="role"
-              value={formData.role}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-            >
-              <option value="user">Customer</option>
-              <option value="vendor">Event Owner</option>
-            </select>
             <p className="text-sm text-gray-500 mt-2">
-              Customers can browse and register for events. Event Owners can add event listings.
+              All users start with a common account. After login, apply for vendor or partner roles from the partner application page.
             </p>
           </div>
 

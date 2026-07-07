@@ -46,6 +46,10 @@ export default function RoleForm() {
 
     try {
       const token = localStorage.getItem('token');
+      if (!token) {
+        navigate('/login');
+        return;
+      }
 
       // Upload documents if any
       const uploadedDocs = [];
@@ -75,6 +79,13 @@ export default function RoleForm() {
 
       // Store request ID
       localStorage.setItem('lastRequestId', response.data.requestId);
+
+      const storedUser = JSON.parse(localStorage.getItem('user') || '{}');
+      if (storedUser && storedUser.id) {
+        const updatedUser = { ...storedUser, status: 'pending' };
+        localStorage.setItem('user', JSON.stringify(updatedUser));
+        window.dispatchEvent(new Event('userUpdated'));
+      }
 
       alert('Application submitted successfully!');
       navigate('/pending-approval');

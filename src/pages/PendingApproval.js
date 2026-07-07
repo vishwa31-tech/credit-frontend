@@ -25,7 +25,13 @@ export default function PendingApproval() {
           headers: { Authorization: `Bearer ${token}` },
         });
 
-        setRequest(response.data);
+        const requestData = response.data.request || response.data;
+        setRequest(requestData);
+
+        if (response.data.user) {
+          localStorage.setItem('user', JSON.stringify(response.data.user));
+          window.dispatchEvent(new Event('userUpdated'));
+        }
       } catch (err) {
         setError('Failed to fetch application status');
         console.error(err);
