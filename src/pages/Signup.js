@@ -53,7 +53,10 @@ export default function Signup() {
       alert('Account created successfully!');
       navigate('/');
     } catch (err) {
-      setError(err.response?.data?.error || 'Failed to create account');
+      const message = err.response?.data?.error
+        || (err.request ? 'Unable to reach the registration server. Please check your backend or CORS settings.' : err.message)
+        || 'Failed to create account';
+      setError(message);
     } finally {
       setLoading(false);
     }
