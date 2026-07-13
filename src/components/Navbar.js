@@ -104,6 +104,9 @@ export default function Navbar() {
               {user?.role === 'admin' && (
                 <Link to="/admin" className="rounded-full bg-slate-100/15 px-3 py-2 text-xs font-bold uppercase tracking-wide hover:bg-slate-100/25 transition">Admin</Link>
               )}
+              {!user && (
+                <Link to="/admin-login" className="rounded-full bg-slate-100/15 px-3 py-2 text-xs font-bold uppercase tracking-wide hover:bg-slate-100/25 transition">Admin Login</Link>
+              )}
             </div>
           </div>
         </div>

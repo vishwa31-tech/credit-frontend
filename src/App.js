@@ -15,6 +15,7 @@ import Jobs from './pages/Jobs';
 import CreateJob from './pages/CreateJob';
 import JobDetail from './pages/JobDetail';
 import AdminPanel from './pages/AdminPanel';
+import AdminLogin from './pages/AdminLogin';
 import News from './pages/News';
 import NewsDetail from './pages/NewsDetail';
 import RoleSelection from './pages/RoleSelection';
@@ -47,6 +48,7 @@ function App() {
         <Route path="/jobs/create" element={<CreateJob />} />
         <Route path="/jobs/:id" element={<JobDetail />} />
         <Route path="/admin" element={<AdminPanel />} />
+        <Route path="/admin-login" element={<AdminLogin />} />
         <Route path="/news" element={<News />} />
         <Route path="/news/:id" element={<NewsDetail />} />
         {/* Multi-role registration routes */}
