@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { adminService } from '../services/api';
 import RoleRequestManagement from '../components/RoleRequestManagement';
 
 export default function AdminPanel() {
+  const navigate = useNavigate();
   const [dashboard, setDashboard] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -26,8 +28,14 @@ export default function AdminPanel() {
   };
 
   useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user') || 'null');
+    if (!localStorage.getItem('token') || user?.role !== 'admin') {
+      navigate('/admin-login');
+      return;
+    }
+
     loadDashboard();
-  }, []);
+  }, [navigate]);
 
   if (loading) return <div className="text-center py-16">Loading admin dashboard...</div>;
   if (error) return <div className="text-center py-16 text-red-600">{error}</div>;
