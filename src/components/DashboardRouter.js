@@ -31,7 +31,16 @@ export default function DashboardRouter() {
           return;
         }
 
-        const userData = JSON.parse(user);
+        let userData = null;
+        try {
+          userData = JSON.parse(user);
+        } catch (parseError) {
+          console.error('Failed to parse stored user:', parseError);
+          localStorage.removeItem('user');
+          navigate('/login');
+          return;
+        }
+
         setUserStatus(userData);
 
         // Redirect based on status

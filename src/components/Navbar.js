@@ -8,8 +8,13 @@ export default function Navbar() {
 
   useEffect(() => {
     const updateUser = () => {
-      const storedUser = JSON.parse(localStorage.getItem('user'));
-      setUser(storedUser);
+      try {
+        const storedUser = localStorage.getItem('user');
+        setUser(storedUser ? JSON.parse(storedUser) : null);
+      } catch (error) {
+        console.error('Failed to parse stored user:', error);
+        setUser(null);
+      }
     };
 
     updateUser();

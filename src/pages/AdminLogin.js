@@ -41,7 +41,8 @@ export default function AdminLogin() {
       window.dispatchEvent(new Event('userUpdated'));
       navigate('/admin');
     } catch (err) {
-      setError(err.response?.data?.error || 'Failed to login as admin');
+      const message = err.response?.data?.error || 'Unable to sign in as admin right now. Please try again.';
+      setError(message);
     } finally {
       setLoading(false);
     }

@@ -38,7 +38,8 @@ export default function Login() {
       alert('Login successful!');
       navigate('/');
     } catch (err) {
-      setError(err.response?.data?.error || 'Failed to login');
+      const message = err.response?.data?.error || 'Unable to sign in right now. Please try again.';
+      setError(message);
     } finally {
       setLoading(false);
     }
