@@ -27,7 +27,10 @@ export default function Login() {
     setError('');
 
     try {
-      const response = await axios.post(`${API_BASE}/auth/login`, formData);
+      const response = await axios.post(`${API_BASE}/auth/login`, {
+        email: formData.email.trim().toLowerCase(),
+        password: formData.password,
+      });
       const { token, user } = response.data;
 
       // Save token to localStorage

@@ -27,10 +27,13 @@ export default function AdminLogin() {
     setError('');
 
     try {
-      const response = await axios.post(`${API_BASE}/auth/login`, formData);
+      const response = await axios.post(`${API_BASE}/auth/login`, {
+        email: formData.email.trim().toLowerCase(),
+        password: formData.password,
+      });
       const { token, user } = response.data;
 
-      if (user.role !== 'admin') {
+      if (user?.role !== 'admin') {
         setError('This account does not have administrator privileges.');
         setLoading(false);
         return;
