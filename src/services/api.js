@@ -36,6 +36,9 @@ export const registrationService = {
 
 export const adminService = {
   getDashboard: () => axios.get(`${API_BASE}/admin/dashboard`, { headers: getAuthHeaders() }),
+  getRoleRequests: (status = 'pending') => axios.get(`${API_BASE}/admin/role-requests?status=${status}`, { headers: getAuthHeaders() }),
+  approveRoleRequest: (requestId, data) => axios.post(`${API_BASE}/admin/role-requests/${requestId}/approve`, data, { headers: getAuthHeaders() }),
+  rejectRoleRequest: (requestId, data) => axios.post(`${API_BASE}/admin/role-requests/${requestId}/reject`, data, { headers: getAuthHeaders() }),
 };
 
 export const newsService = {

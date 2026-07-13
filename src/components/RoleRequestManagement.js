@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { API_BASE } from '../services/api';
+import { adminService } from '../services/api';
 
-export default function RoleRequestManagement() {
+export default function RoleRequestManagement({ onActionComplete, onMessage }) {
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -11,22 +10,26 @@ export default function RoleRequestManagement() {
   const [actionLoading, setActionLoading] = useState(false);
   const [rejectionReason, setRejectionReason] = useState('');
   const [adminNotes, setAdminNotes] = useState('');
+  const [feedback, setFeedback] = useState({ type: '', text: '' });
 
   useEffect(() => {
     fetchRequests();
   }, [filterStatus]);
 
+  const showFeedback = (type, text) => {
+    setFeedback({ type, text });
+    onMessage?.({ type, text });
+  };
+
   const fetchRequests = async () => {
     try {
       setLoading(true);
-      const token = localStorage.getItem('token');
-      const response = await axios.get(
-        `${API_BASE}/admin/role-requests?status=${filterStatus}`,
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      setRequests(response.data.requests);
+      setError('');
+      const response = await adminService.getRoleRequests(filterStatus);
+      setRequests(response.data.requests || []);
     } catch (err) {
       setError('Failed to fetch requests');
+      showFeedback('error', 'Unable to load role requests right now.');
       console.error(err);
     } finally {
       setLoading(false);
@@ -36,18 +39,18 @@ export default function RoleRequestManagement() {
   const handleApprove = async (requestId) => {
     try {
       setActionLoading(true);
-      const token = localStorage.getItem('token');
-      await axios.post(
-        `${API_BASE}/admin/role-requests/${requestId}/approve`,
-        { adminNotes },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      alert('Role request approved successfully!');
+      const response = await adminService.approveRoleRequest(requestId, { adminNotes });
+      showFeedback('success', response.data?.message || 'Role request approved successfully');
       setSelectedRequest(null);
       setAdminNotes('');
-      fetchRequests();
+      setRejectionReason('');
+      if (onActionComplete) {
+        await onActionComplete();
+      } else {
+        await fetchRequests();
+      }
     } catch (err) {
-      alert(err.response?.data?.error || 'Failed to approve request');
+      showFeedback('error', err.response?.data?.error || 'Failed to approve request');
     } finally {
       setActionLoading(false);
     }
@@ -55,24 +58,24 @@ export default function RoleRequestManagement() {
 
   const handleReject = async (requestId) => {
     if (!rejectionReason.trim()) {
-      alert('Please provide a rejection reason');
+      showFeedback('error', 'Please provide a rejection reason');
       return;
     }
 
     try {
       setActionLoading(true);
-      const token = localStorage.getItem('token');
-      await axios.post(
-        `${API_BASE}/admin/role-requests/${requestId}/reject`,
-        { rejectionReason },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      alert('Role request rejected successfully!');
+      const response = await adminService.rejectRoleRequest(requestId, { rejectionReason });
+      showFeedback('success', response.data?.message || 'Role request rejected successfully');
       setSelectedRequest(null);
       setRejectionReason('');
-      fetchRequests();
+      setAdminNotes('');
+      if (onActionComplete) {
+        await onActionComplete();
+      } else {
+        await fetchRequests();
+      }
     } catch (err) {
-      alert(err.response?.data?.error || 'Failed to reject request');
+      showFeedback('error', err.response?.data?.error || 'Failed to reject request');
     } finally {
       setActionLoading(false);
     }
@@ -119,6 +122,12 @@ export default function RoleRequestManagement() {
       {error && (
         <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
           {error}
+        </div>
+      )}
+
+      {feedback.text && (
+        <div className={`rounded-lg border px-4 py-3 ${feedback.type === 'success' ? 'bg-green-100 border-green-400 text-green-700' : 'bg-red-100 border-red-400 text-red-700'}`}>
+          {feedback.text}
         </div>
       )}
 

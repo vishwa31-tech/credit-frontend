@@ -7,17 +7,26 @@ export default function AdminPanel() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [activeTab, setActiveTab] = useState('overview');
+  const [panelMessage, setPanelMessage] = useState({ type: '', text: '' });
 
-  useEffect(() => {
-    adminService.getDashboard()
+  const loadDashboard = () => {
+    setLoading(true);
+    setError('');
+    return adminService.getDashboard()
       .then(res => {
         setDashboard(res.data);
-        setLoading(false);
+        setPanelMessage({ type: '', text: '' });
       })
       .catch(err => {
         setError(err.response?.data?.error || 'Unable to load admin dashboard');
+      })
+      .finally(() => {
         setLoading(false);
       });
+  };
+
+  useEffect(() => {
+    loadDashboard();
   }, []);
 
   if (loading) return <div className="text-center py-16">Loading admin dashboard...</div>;
@@ -27,7 +36,21 @@ export default function AdminPanel() {
     <div className="min-h-screen bg-gray-50 py-12 px-4">
       <div className="max-w-6xl mx-auto space-y-8">
         <div className="bg-white rounded-xl shadow-lg p-8">
-          <h1 className="text-3xl font-bold mb-6 text-gray-800">Admin Dashboard</h1>
+          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between mb-6">
+            <h1 className="text-3xl font-bold text-gray-800">Admin Dashboard</h1>
+            <button
+              onClick={() => loadDashboard()}
+              className="rounded-lg bg-purple-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-purple-700"
+            >
+              Refresh Data
+            </button>
+          </div>
+
+          {panelMessage.text && (
+            <div className={`mb-6 rounded-lg border px-4 py-3 ${panelMessage.type === 'success' ? 'bg-green-100 border-green-400 text-green-700' : 'bg-red-100 border-red-400 text-red-700'}`}>
+              {panelMessage.text}
+            </div>
+          )}
 
           {/* Tabs */}
           <div className="flex gap-4 mb-8 border-b">
@@ -93,6 +116,50 @@ export default function AdminPanel() {
 
               <div className="grid gap-6 lg:grid-cols-2">
                 <div className="bg-white rounded-xl shadow-lg p-6">
+                  <h2 className="text-2xl font-semibold text-gray-800 mb-4">Recent Users</h2>
+                  <div className="space-y-3">
+                    {dashboard.users?.length > 0 ? dashboard.users.slice(0, 6).map(user => (
+                      <div key={user._id} className="p-4 border rounded-lg border-gray-200">
+                        <div className="flex items-center justify-between gap-3">
+                          <div>
+                            <p className="font-semibold text-gray-800">{user.name || 'Unnamed user'}</p>
+                            <p className="text-sm text-gray-600">{user.email}</p>
+                          </div>
+                          <span className="rounded-full bg-purple-100 px-3 py-1 text-xs font-semibold text-purple-700">
+                            {user.role || 'user'}
+                          </span>
+                        </div>
+                        <p className="mt-2 text-sm text-gray-500">
+                          {user.city || 'No city'} • Joined {new Date(user.createdAt).toLocaleDateString()}
+                        </p>
+                      </div>
+                    )) : (
+                      <p className="text-sm text-gray-500">No users available yet.</p>
+                    )}
+                  </div>
+                </div>
+
+                <div className="bg-white rounded-xl shadow-lg p-6">
+                  <h2 className="text-2xl font-semibold text-gray-800 mb-4">Approval Summary</h2>
+                  <div className="space-y-3 rounded-lg border border-gray-200 bg-gray-50 p-4">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-gray-600">Pending approvals</span>
+                      <span className="text-xl font-semibold text-amber-600">{dashboard.counts.pendingRoleRequests || 0}</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-gray-600">Approved this cycle</span>
+                      <span className="text-xl font-semibold text-green-600">{dashboard.counts.approvedRoleRequests || 0}</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-gray-600">Rejected requests</span>
+                      <span className="text-xl font-semibold text-red-600">{dashboard.counts.rejectedRoleRequests || 0}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid gap-6 lg:grid-cols-2">
+                <div className="bg-white rounded-xl shadow-lg p-6">
                   <h2 className="text-2xl font-semibold text-gray-800 mb-4">Recent Events</h2>
                   <div className="space-y-3">
                     {dashboard.events.map(event => (
@@ -138,7 +205,7 @@ export default function AdminPanel() {
 
           {/* Role Requests Tab */}
           {activeTab === 'role-requests' && (
-            <RoleRequestManagement />
+            <RoleRequestManagement onActionComplete={loadDashboard} onMessage={setPanelMessage} />
           )}
         </div>
       </div>
