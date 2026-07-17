@@ -2,6 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { eventService } from '../services/api';
 
+const quickTiles = [
+  { title: 'Events', to: '/events', icon: '🎉' },
+  { title: 'Services', to: '/businesses', icon: '🛎️' },
+  { title: 'Jobs', to: '/jobs', icon: '💼' },
+  { title: 'News', to: '/news', icon: '📰' },
+];
+
 export default function Home() {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -18,7 +25,7 @@ export default function Home() {
       <section className="relative min-h-screen bg-gradient-to-br from-purple-800 via-fuchsia-700 to-pink-500 text-white overflow-hidden">
         <div className="absolute -left-24 top-24 w-72 h-72 rounded-full bg-white/15 blur-3xl" />
         <div className="absolute right-0 top-32 w-96 h-96 rounded-full bg-cyan-400/20 blur-3xl" />
-        <div className="relative max-w-6xl mx-auto px-4 py-28">
+        <div className="relative max-w-7xl mx-auto px-4 py-28">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
             <div className="space-y-8">
               <div className="inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-2 text-sm uppercase tracking-[0.24em] text-white/90 shadow-lg shadow-black/20">
@@ -57,6 +64,19 @@ export default function Home() {
               </div>
             </div>
           </div>
+
+          <div className="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-3">
+            {quickTiles.map((tile) => (
+              <Link
+                key={tile.title}
+                to={tile.to}
+                className="rounded-3xl border border-white/15 bg-white/10 px-4 py-4 text-center text-sm font-semibold text-white transition hover:-translate-y-1 hover:bg-white/20"
+              >
+                <div className="text-3xl mb-2">{tile.icon}</div>
+                <div>{tile.title}</div>
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -77,7 +97,7 @@ export default function Home() {
             {loading ? (
               <div className="col-span-full text-center py-12 text-slate-500">Loading events...</div>
             ) : (
-              events.map(event => (
+              events.map((event) => (
                 <Link key={event._id} to={`/events/${event._id}`}>
                   <div className="group overflow-hidden rounded-[2rem] bg-white shadow-2xl shadow-slate-200 transition hover:-translate-y-1 hover:shadow-purple-300/40">
                     <div className="relative h-48 bg-gradient-to-br from-fuchsia-500 via-purple-600 to-indigo-600 flex items-center justify-center text-white text-5xl font-bold">
@@ -90,7 +110,7 @@ export default function Home() {
                       <p className="mt-3 text-slate-600 line-clamp-3">{event.description.substring(0, 80)}...</p>
                       <div className="mt-6 flex items-center justify-between gap-3 text-slate-700">
                         <span className="font-semibold">${event.price}</span>
-                        <span className="rounded-full bg-slate-100 px-3 py-1 text-sm">{event.location.city}</span>
+                        <span className="rounded-full bg-slate-100 px-3 py-1 text-sm text-slate-700">{event.location.city}</span>
                       </div>
                     </div>
                   </div>
@@ -111,7 +131,7 @@ export default function Home() {
             { title: 'Events', icon: '🎉', desc: 'Launch memorable celebrations with premium vendors.' },
             { title: 'Catering', icon: '🍽️', desc: 'Choose top catering services for every budget.' },
             { title: 'Jobs', icon: '💼', desc: 'Find event roles that pay well and feel exciting.' },
-            { title: 'News', icon: '📰', desc: 'Stay in the loop with the freshest industry updates.' }
+            { title: 'News', icon: '📰', desc: 'Stay in the loop with the freshest industry updates.' },
           ].map((service, idx) => (
             <div key={idx} className="rounded-[2rem] border border-white/80 bg-white/80 p-8 shadow-2xl shadow-slate-200 backdrop-blur-xl transition hover:-translate-y-1">
               <div className="text-5xl mb-4">{service.icon}</div>
@@ -132,8 +152,8 @@ export default function Home() {
           <p className="text-lg text-white/80 mb-10">
             Choose from multiple partnership opportunities in catering, decoration, photography, venue management, event organization, and more.
           </p>
-          <Link 
-            to="/role-selection" 
+          <Link
+            to="/role-selection"
             className="inline-flex items-center justify-center rounded-full bg-white px-10 py-4 text-xl font-bold text-purple-700 shadow-2xl shadow-purple-900/30 hover:scale-105 transition"
           >
             Start Your Partnership Journey →
