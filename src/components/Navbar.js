@@ -49,7 +49,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="relative sticky top-0 z-50">
+    <nav className="sticky top-0 z-50">
       <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-r from-purple-700 via-fuchsia-600 to-pink-500 blur-3xl opacity-80" />
       <div className="relative border-b border-white/10 bg-slate-950/10 backdrop-blur-xl shadow-2xl">
         <div className="max-w-7xl mx-auto px-4 py-4 flex flex-col gap-4 lg:gap-6">

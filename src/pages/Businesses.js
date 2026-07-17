@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { businessService } from '../services/api';
 
+const categories = ['', 'catering', 'photography', 'venue', 'decoration'];
+
 export default function Businesses() {
   const [businesses, setBusinesses] = useState([]);
   const [category, setCategory] = useState('');
@@ -17,16 +19,23 @@ export default function Businesses() {
   const filtered = category ? businesses.filter(b => b.category === category) : businesses;
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-cyan-100 via-white to-slate-100 text-slate-900">
-      <div className="max-w-6xl mx-auto px-4 py-16">
-        <div className="rounded-[2rem] bg-white/90 p-10 shadow-2xl shadow-cyan-200/40 backdrop-blur-xl">
-          <p className="text-sm uppercase tracking-[0.3em] text-cyan-700 font-bold">Creative service partners</p>
-          <h1 className="mt-6 text-5xl font-extrabold">Find beautiful vendors for every celebration</h1>
-          <p className="mt-4 max-w-2xl text-lg text-slate-600">Tap into premium catering, photography, venues and décor teams that bring your vision to life.</p>
-        </div>
+    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-cyan-900 to-slate-100 text-slate-900">
+      <div className="relative overflow-hidden">
+        <div className="absolute left-0 top-24 h-72 w-72 rounded-full bg-cyan-500/20 blur-3xl" />
+        <div className="absolute right-0 top-10 h-96 w-96 rounded-full bg-violet-500/10 blur-3xl" />
 
+        <div className="relative max-w-6xl mx-auto px-4 py-16">
+          <div className="rounded-[2rem] border border-white/10 bg-gradient-to-r from-cyan-500 via-sky-500 to-indigo-600 p-10 shadow-2xl shadow-cyan-900/30 text-white">
+            <p className="text-sm uppercase tracking-[0.3em] text-cyan-100 font-bold">Creative service partners</p>
+            <h1 className="mt-6 text-5xl font-extrabold">Find beautiful vendors for every celebration</h1>
+            <p className="mt-4 max-w-2xl text-lg text-cyan-100/90">Tap into premium catering, photography, venues and décor teams that bring your vision to life.</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="max-w-6xl mx-auto px-4 pb-16">
         <div className="mt-10 flex flex-wrap gap-3">
-          {['', 'catering', 'photography', 'venue', 'decoration'].map(cat => {
+          {categories.map(cat => {
             const selected = category === cat;
             return (
               <button

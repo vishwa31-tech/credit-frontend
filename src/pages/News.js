@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { newsService } from '../services/api';
 
+const categories = ['', 'events', 'business', 'entertainment', 'lifestyle'];
+
 export default function News() {
   const [news, setNews] = useState([]);
   const [category, setCategory] = useState('');
@@ -18,15 +20,23 @@ export default function News() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-orange-50 via-white to-slate-100 text-slate-900">
-      <div className="max-w-6xl mx-auto px-4 py-16">
-        <div className="rounded-[2rem] bg-gradient-to-br from-orange-500 to-pink-500 p-10 shadow-2xl shadow-orange-300/30 text-white">
-          <p className="text-sm uppercase tracking-[0.35em] text-orange-100/90">Hot stories</p>
-          <h1 className="mt-6 text-5xl font-extrabold">Stay ahead with the latest event news</h1>
-          <p className="mt-4 max-w-2xl text-lg text-orange-100/90">Current trends, announcements, and stories from the world of events, vendors, and lifestyles.</p>
-        </div>
+      <div className="relative overflow-hidden">
+        <div className="absolute left-0 top-24 h-72 w-72 rounded-full bg-orange-300/20 blur-3xl" />
+        <div className="absolute right-0 top-20 h-80 w-80 rounded-full bg-pink-400/20 blur-3xl" />
+        <div className="absolute left-1/2 top-36 h-72 w-72 -translate-x-1/2 rounded-full bg-amber-300/10 blur-3xl" />
 
+        <div className="relative max-w-6xl mx-auto px-4 py-16">
+          <div className="rounded-[2rem] bg-gradient-to-br from-orange-500 to-pink-500 p-10 shadow-2xl shadow-orange-300/30 text-white">
+            <p className="text-sm uppercase tracking-[0.35em] text-orange-100/90">Hot stories</p>
+            <h1 className="mt-6 text-5xl font-extrabold">Stay ahead with the latest event news</h1>
+            <p className="mt-4 max-w-2xl text-lg text-orange-100/90">Current trends, announcements, and stories from the world of events, vendors, and lifestyles.</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="max-w-6xl mx-auto px-4 pb-16">
         <div className="mt-10 flex flex-wrap gap-3">
-          {['', 'events', 'business', 'entertainment', 'lifestyle'].map(cat => {
+          {categories.map(cat => {
             const selected = category === cat;
             return (
               <button
@@ -48,11 +58,14 @@ export default function News() {
               <Link key={article._id} to={`/news/${article._id}`}>
                 <div className="group overflow-hidden rounded-[2rem] bg-white shadow-2xl transition hover:-translate-y-1 hover:shadow-orange-300/40">
                   <div className="relative h-44 bg-gradient-to-r from-orange-500 via-rose-500 to-fuchsia-500 flex items-center justify-center text-white text-5xl">
-                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(255,255,255,0.18),_transparent_40%)]" />
+                    <span className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(255,255,255,0.18),_transparent_40%)]" />
                     📰
                   </div>
                   <div className="p-6">
-                    <h3 className="text-2xl font-bold text-slate-900">{article.title}</h3>
+                    <div className="flex items-center justify-between gap-3 flex-wrap">
+                      <h3 className="text-2xl font-bold text-slate-900">{article.title}</h3>
+                      <span className="rounded-full bg-orange-100 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-orange-700">{article.category || 'News'}</span>
+                    </div>
                     <p className="mt-3 text-slate-600 line-clamp-4">{article.content.substring(0, 100)}...</p>
                     <div className="mt-6 flex items-center justify-between text-sm text-slate-500">
                       <span>{new Date(article.createdAt).toLocaleDateString()}</span>

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { eventService } from '../services/api';
 
+const categories = ['', 'wedding', 'festival', 'party', 'concert'];
+
 export default function Events() {
   const [events, setEvents] = useState([]);
   const [category, setCategory] = useState('');
@@ -17,23 +19,24 @@ export default function Events() {
   const filtered = category ? events.filter(e => e.category === category) : events;
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-100 text-slate-900">
+    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-purple-950 to-slate-100 text-slate-900">
       <div className="relative overflow-hidden">
-        <div className="absolute -left-20 top-24 h-72 w-72 rounded-full bg-fuchsia-500/20 blur-3xl" />
-        <div className="absolute right-0 top-24 h-80 w-80 rounded-full bg-cyan-400/10 blur-3xl" />
+        <div className="absolute -left-24 top-24 h-72 w-72 rounded-full bg-fuchsia-500/20 blur-3xl" />
+        <div className="absolute right-0 top-24 h-80 w-80 rounded-full bg-cyan-400/15 blur-3xl" />
+        <div className="absolute left-1/2 top-48 h-96 w-96 -translate-x-1/2 rounded-full bg-violet-500/10 blur-3xl" />
 
         <div className="relative max-w-6xl mx-auto px-4 py-16">
-          <div className="rounded-[2rem] bg-slate-950/90 p-10 shadow-2xl shadow-slate-950/30 text-white">
-            <p className="text-sm uppercase tracking-[0.35em] text-fuchsia-300">Live events & immersive experiences</p>
+          <div className="rounded-[2rem] border border-white/10 bg-gradient-to-r from-fuchsia-700 via-purple-800 to-indigo-700 p-10 shadow-2xl shadow-purple-900/30 text-white">
+            <p className="text-sm uppercase tracking-[0.35em] text-cyan-200">Live events & immersive experiences</p>
             <h1 className="mt-6 text-5xl font-extrabold tracking-tight">Discover the most exciting events near you</h1>
-            <p className="mt-4 max-w-2xl text-lg text-slate-300">Filter by the event type you love and open doors to unforgettable celebrations, shows, and festivals.</p>
+            <p className="mt-4 max-w-2xl text-lg text-slate-100/80">Filter by the event type you love and open doors to unforgettable celebrations, shows, and festivals.</p>
           </div>
         </div>
       </div>
 
       <div className="max-w-6xl mx-auto px-4 py-10">
         <div className="mb-8 flex flex-wrap items-center gap-3">
-          {['', 'wedding', 'festival', 'party', 'concert'].map(cat => {
+          {categories.map(cat => {
             const selected = category === cat;
             return (
               <button
@@ -55,7 +58,7 @@ export default function Events() {
               <Link key={event._id} to={`/events/${event._id}`}>
                 <div className="group overflow-hidden rounded-[2rem] bg-white shadow-2xl transition hover:-translate-y-1 hover:shadow-fuchsia-300/40">
                   <div className="relative h-48 bg-gradient-to-br from-fuchsia-500 via-purple-600 to-indigo-600 flex items-center justify-center text-white text-5xl font-bold">
-                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(255,255,255,0.18),_transparent_40%)]" />
+                    <span className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(255,255,255,0.18),_transparent_40%)]" />
                     {event.category.charAt(0).toUpperCase()}
                   </div>
                   <div className="p-6">

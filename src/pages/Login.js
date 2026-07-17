@@ -49,33 +49,36 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 flex items-center justify-center px-4 py-12">
-      <div className="w-full max-w-md bg-white rounded-xl shadow-2xl p-8">
-        <h1 className="text-3xl font-bold text-gray-800 mb-2 text-center">Welcome Back</h1>
-        <p className="text-gray-600 text-center mb-8">Sign in to your EventHub account</p>
+    <div className="min-h-screen bg-gradient-to-br from-purple-950 via-indigo-900 to-cyan-900 flex items-center justify-center px-4 py-12 text-white">
+      <div className="w-full max-w-md rounded-[2rem] border border-white/10 bg-slate-950/90 p-8 shadow-2xl shadow-cyan-900/40 backdrop-blur-xl">
+        <div className="text-center mb-8">
+          <p className="text-sm uppercase tracking-[0.3em] text-cyan-300/70">Secure sign in</p>
+          <h1 className="mt-4 text-4xl font-extrabold">Welcome Back</h1>
+          <p className="mt-3 text-slate-300">Sign in to your EventHub account</p>
+        </div>
 
         {error && (
-          <div className="bg-red-100 text-red-800 p-4 rounded-lg mb-6">
+          <div className="bg-rose-100 text-rose-900 p-4 rounded-2xl mb-6">
             {error}
           </div>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label className="block text-gray-700 font-semibold mb-2">Email</label>
+            <label className="block text-sm font-semibold text-slate-200 mb-2">Email</label>
             <input
               type="email"
               name="email"
               value={formData.email}
               onChange={handleChange}
               required
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="w-full rounded-2xl border border-white/10 bg-slate-900/90 px-4 py-3 text-white outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/25"
               placeholder="your@email.com"
             />
           </div>
 
           <div>
-            <label className="block text-gray-700 font-semibold mb-2">Password</label>
+            <label className="block text-sm font-semibold text-slate-200 mb-2">Password</label>
             <div className="relative">
               <input
                 type={showPassword ? 'text' : 'password'}
@@ -83,13 +86,13 @@ export default function Login() {
                 value={formData.password}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full rounded-2xl border border-white/10 bg-slate-900/90 px-4 py-3 pr-20 text-white outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/25"
                 placeholder="••••••••"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(prev => !prev)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-purple-600 hover:text-purple-700"
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-sm font-semibold text-cyan-300 hover:text-cyan-100"
               >
                 {showPassword ? 'Hide' : 'Show'}
               </button>
@@ -99,16 +102,16 @@ export default function Login() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white py-3 rounded-lg font-bold hover:opacity-90 transition disabled:opacity-50"
+            className="w-full rounded-2xl bg-gradient-to-r from-purple-600 to-fuchsia-500 px-6 py-3 text-lg font-bold text-white shadow-xl shadow-fuchsia-500/20 transition hover:opacity-90 disabled:opacity-50"
           >
             {loading ? 'Signing in...' : 'Sign In'}
           </button>
         </form>
 
-        <div className="mt-6 pt-6 border-t border-gray-200">
-          <p className="text-gray-600 text-center">
+        <div className="mt-6 pt-6 border-t border-white/10 text-center">
+          <p className="text-slate-300">
             Don't have an account?{' '}
-            <Link to="/signup" className="text-purple-600 font-bold hover:text-purple-700">
+            <Link to="/signup" className="text-cyan-300 font-bold hover:text-cyan-100">
               Sign Up
             </Link>
           </p>
@@ -116,7 +119,7 @@ export default function Login() {
 
         <button
           onClick={() => navigate('/')}
-          className="w-full mt-4 text-gray-600 hover:text-gray-800 font-semibold"
+          className="w-full mt-6 rounded-2xl border border-white/10 bg-white/5 py-3 text-sm font-semibold text-cyan-200 hover:bg-white/10 transition"
         >
           ← Back to Home
         </button>

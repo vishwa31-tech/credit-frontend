@@ -63,99 +63,100 @@ export default function Signup() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 flex items-center justify-center px-4 py-12">
-      <div className="w-full max-w-md bg-white rounded-xl shadow-2xl p-8">
-        <h1 className="text-3xl font-bold text-gray-800 mb-2 text-center">
-          Create Your EventHub Account
-        </h1>
-        <p className="text-gray-600 text-center mb-6">Register once and then choose your partner role after login from the role application page.</p>
+    <div className="min-h-screen bg-gradient-to-br from-purple-950 via-indigo-900 to-cyan-900 flex items-center justify-center px-4 py-12 text-white">
+      <div className="w-full max-w-md rounded-[2rem] border border-white/10 bg-slate-950/90 p-8 shadow-2xl shadow-cyan-900/40 backdrop-blur-xl">
+        <div className="text-center mb-8">
+          <p className="text-sm uppercase tracking-[0.3em] text-cyan-300/70">Join the community</p>
+          <h1 className="mt-4 text-4xl font-extrabold">Create your EventHub account</h1>
+          <p className="mt-3 text-slate-300">Register once and choose your partner role after login.</p>
+        </div>
 
         {error && (
-          <div className="bg-red-100 text-red-800 p-4 rounded-lg mb-6">
+          <div className="bg-rose-100 text-rose-900 p-4 rounded-2xl mb-6">
             {error}
           </div>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-gray-700 font-semibold mb-1">Full Name</label>
+            <label className="block text-sm font-semibold text-slate-200 mb-2">Full Name</label>
             <input
               type="text"
               name="name"
               value={formData.name}
               onChange={handleChange}
               required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="w-full rounded-2xl border border-white/10 bg-slate-900/90 px-4 py-3 text-white outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/25"
               placeholder="John Doe"
             />
           </div>
 
           <div>
-            <label className="block text-gray-700 font-semibold mb-1">Email</label>
+            <label className="block text-sm font-semibold text-slate-200 mb-2">Email</label>
             <input
               type="email"
               name="email"
               value={formData.email}
               onChange={handleChange}
               required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="w-full rounded-2xl border border-white/10 bg-slate-900/90 px-4 py-3 text-white outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/25"
               placeholder="your@email.com"
             />
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-gray-700 font-semibold mb-1">Phone</label>
+              <label className="block text-sm font-semibold text-slate-200 mb-2">Phone</label>
               <input
                 type="tel"
                 name="phone"
                 value={formData.phone}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full rounded-2xl border border-white/10 bg-slate-900/90 px-4 py-3 text-white outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/25"
                 placeholder="123-456-7890"
               />
             </div>
             <div>
-              <label className="block text-gray-700 font-semibold mb-1">City</label>
+              <label className="block text-sm font-semibold text-slate-200 mb-2">City</label>
               <input
                 type="text"
                 name="city"
                 value={formData.city}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full rounded-2xl border border-white/10 bg-slate-900/90 px-4 py-3 text-white outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/25"
                 placeholder="New York"
               />
             </div>
           </div>
 
           <div>
-            <p className="text-sm text-gray-500 mt-2">
+            <p className="text-sm text-slate-400 mt-2">
               All users start with a common account. After login, apply for vendor or partner roles from the partner application page.
             </p>
           </div>
 
           <div>
-            <label className="block text-gray-700 font-semibold mb-1">Password</label>
+            <label className="block text-sm font-semibold text-slate-200 mb-2">Password</label>
             <input
               type="password"
               name="password"
               value={formData.password}
               onChange={handleChange}
               required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="w-full rounded-2xl border border-white/10 bg-slate-900/90 px-4 py-3 text-white outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/25"
               placeholder="••••••••"
             />
           </div>
 
           <div>
-            <label className="block text-gray-700 font-semibold mb-1">Confirm Password</label>
+            <label className="block text-sm font-semibold text-slate-200 mb-2">Confirm Password</label>
             <input
               type="password"
               name="confirmPassword"
               value={formData.confirmPassword}
               onChange={handleChange}
               required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="w-full rounded-2xl border border-white/10 bg-slate-900/90 px-4 py-3 text-white outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/25"
               placeholder="••••••••"
             />
           </div>
@@ -163,16 +164,16 @@ export default function Signup() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white py-3 rounded-lg font-bold hover:opacity-90 transition disabled:opacity-50 mt-6"
+            className="w-full rounded-2xl bg-gradient-to-r from-purple-600 to-fuchsia-500 px-6 py-3 text-lg font-bold text-white shadow-xl shadow-fuchsia-500/20 transition hover:opacity-90 disabled:opacity-50 mt-6"
           >
             {loading ? 'Creating Account...' : 'Create Account'}
           </button>
         </form>
 
-        <div className="mt-6 pt-6 border-t border-gray-200">
-          <p className="text-gray-600 text-center">
+        <div className="mt-6 pt-6 border-t border-white/10 text-center">
+          <p className="text-slate-300">
             Already have an account?{' '}
-            <Link to="/login" className="text-purple-600 font-bold hover:text-purple-700">
+            <Link to="/login" className="text-cyan-300 font-bold hover:text-cyan-100">
               Sign In
             </Link>
           </p>
@@ -180,7 +181,7 @@ export default function Signup() {
 
         <button
           onClick={() => navigate('/')}
-          className="w-full mt-4 text-gray-600 hover:text-gray-800 font-semibold"
+          className="w-full mt-6 rounded-2xl border border-white/10 bg-white/5 py-3 text-sm font-semibold text-cyan-200 hover:bg-white/10 transition"
         >
           ← Back to Home
         </button>
