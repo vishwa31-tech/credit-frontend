@@ -22,37 +22,37 @@ export default function Businesses() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-950 via-cyan-900 to-slate-100 text-slate-900">
       <div className="relative overflow-hidden">
-        <div className="absolute left-0 top-24 h-72 w-72 rounded-full bg-cyan-500/20 blur-3xl" />
-        <div className="absolute right-0 top-10 h-96 w-96 rounded-full bg-violet-500/10 blur-3xl" />
+        <div className="absolute left-0 top-16 h-56 w-56 rounded-full bg-cyan-500/20 blur-3xl" />
+        <div className="absolute right-0 top-8 h-80 w-80 rounded-full bg-violet-500/10 blur-3xl" />
 
-        <div className="relative max-w-6xl mx-auto px-4 py-16">
-          <div className="rounded-[2rem] border border-white/10 bg-gradient-to-r from-cyan-500 via-sky-500 to-indigo-600 p-10 shadow-2xl shadow-cyan-900/30 text-white">
+        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          <div className="rounded-[2rem] border border-white/10 bg-gradient-to-r from-cyan-500 via-sky-500 to-indigo-600 p-8 sm:p-12 shadow-2xl shadow-cyan-900/30 text-white">
             <p className="text-sm uppercase tracking-[0.3em] text-cyan-100 font-bold">Creative service partners</p>
-            <h1 className="mt-6 text-5xl font-extrabold">Find beautiful vendors for every celebration</h1>
-            <p className="mt-4 max-w-2xl text-lg text-cyan-100/90">Tap into premium catering, photography, venues and décor teams that bring your vision to life.</p>
+            <h1 className="mt-6 text-4xl sm:text-5xl lg:text-6xl font-extrabold">Find beautiful vendors for every celebration</h1>
+            <p className="mt-4 max-w-3xl text-base sm:text-lg text-cyan-100/90">Tap into premium catering, photography, venues and décor teams that bring your vision to life on mobile and desktop.</p>
           </div>
         </div>
       </div>
 
       {showPopup && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/70 p-4">
-          <div className="w-full max-w-xl rounded-[2rem] bg-white p-8 shadow-2xl ring-1 ring-slate-200">
-            <div className="flex items-start justify-between gap-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 p-4 md:p-6">
+          <div className="w-full max-w-2xl rounded-[2rem] bg-white p-6 sm:p-10 shadow-2xl ring-1 ring-slate-200 max-h-[85vh] overflow-y-auto">
+            <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
               <div>
                 <p className="text-sm uppercase tracking-[0.3em] text-cyan-500 font-bold">Service browsing only</p>
-                <h2 className="mt-3 text-3xl font-bold text-slate-900">Explore service providers</h2>
-                <p className="mt-4 text-slate-600 leading-relaxed">
-                  Customers can view all services here. If you want to join as a service partner and list your own offerings, register via the Join as Partner page.
+                <h2 className="mt-3 text-3xl sm:text-4xl font-bold text-slate-900">Explore service providers</h2>
+                <p className="mt-4 text-slate-600 leading-relaxed text-sm sm:text-base">
+                  Customers can browse this page and view services on both mobile and desktop. If you want to register as a service partner, use the Join as Partner page to create your listing.
                 </p>
               </div>
               <button
                 onClick={() => setShowPopup(false)}
-                className="rounded-full bg-slate-800 px-4 py-2 text-white hover:bg-slate-900 transition"
+                className="self-start rounded-full bg-slate-800 px-4 py-2 text-sm text-white hover:bg-slate-900 transition"
               >
                 Close
               </button>
             </div>
-            <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-end">
+            <div className="mt-6 grid gap-3 sm:grid-cols-2">
               <button
                 onClick={() => setShowPopup(false)}
                 className="rounded-full bg-slate-200 px-5 py-3 text-sm font-semibold text-slate-800 hover:bg-slate-300 transition"

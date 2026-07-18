@@ -48,15 +48,15 @@ export default function BusinessDetail() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-cyan-950 via-slate-100 to-white text-slate-900">
-      <div className="max-w-6xl mx-auto px-4 py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <button onClick={() => navigate('/businesses')} className="text-cyan-700 hover:text-cyan-900 mb-6 font-semibold">
           ← Back to Services
         </button>
 
-        <div className="mb-6 rounded-3xl border border-cyan-200 bg-cyan-50 p-5 text-cyan-900 shadow-sm">
+        <div className="mb-6 rounded-[2rem] border border-cyan-200 bg-cyan-50 p-5 sm:p-6 text-cyan-900 shadow-sm">
           <p className="text-base font-semibold">Viewing services only</p>
-          <p className="mt-2 text-sm text-cyan-800">
-            Customers can explore this partner's services here. To become a service provider, register as a partner from the Join as Partner page.
+          <p className="mt-2 text-sm sm:text-base text-cyan-800 leading-relaxed">
+            Customers can explore this partner&apos;s offerings here on mobile and desktop. To add your own services, register as a partner on the Join as Partner page.
           </p>
         </div>
 
@@ -74,10 +74,10 @@ export default function BusinessDetail() {
               <span className="rounded-full bg-slate-100 px-3 py-1 text-sm text-slate-700">{business.reviews.length} reviews</span>
             </div>
 
-            <div className="grid gap-8 lg:grid-cols-2 mb-10">
-              <div className="rounded-[1.5rem] bg-slate-50 p-8 shadow-lg">
+            <div className="grid gap-8 lg:grid-cols-[1.4fr_0.9fr] mb-10">
+              <div className="rounded-[1.5rem] bg-slate-50 p-6 sm:p-8 shadow-lg">
                 <h2 className="text-2xl font-semibold text-slate-900 mb-5">Business Info</h2>
-                <div className="space-y-3 text-slate-700">
+                <div className="space-y-3 text-slate-700 text-sm sm:text-base">
                   <p><strong>Category:</strong> <span className="capitalize text-cyan-700">{business.category}</span></p>
                   <p><strong>Email:</strong> {business.email}</p>
                   <p><strong>Phone:</strong> {business.phone}</p>
@@ -88,9 +88,9 @@ export default function BusinessDetail() {
                 </div>
               </div>
 
-              <div className="rounded-[1.5rem] bg-cyan-50 p-8 shadow-lg border border-cyan-100">
+              <div className="rounded-[1.5rem] bg-cyan-50 p-6 sm:p-8 shadow-lg border border-cyan-100">
                 <h2 className="text-2xl font-semibold text-slate-900 mb-5">Pricing</h2>
-                <div className="space-y-4 text-slate-700">
+                <div className="space-y-4 text-slate-700 text-sm sm:text-base">
                   <p><strong>Min Budget:</strong> <span className="text-3xl font-bold text-cyan-700">${business.pricing?.minBudget || 'N/A'}</span></p>
                   <p><strong>Max Budget:</strong> <span className="text-3xl font-bold text-cyan-700">${business.pricing?.maxBudget || 'N/A'}</span></p>
                 </div>
@@ -103,6 +103,21 @@ export default function BusinessDetail() {
                 <p className="text-slate-600 leading-relaxed">{business.description}</p>
               </div>
             )}
+
+            <div className="mb-10 rounded-[1.5rem] bg-emerald-500/10 border border-emerald-200 p-6 sm:p-8 shadow-lg">
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                  <h2 className="text-2xl font-semibold text-emerald-900">Want to join as a partner?</h2>
+                  <p className="mt-2 text-sm sm:text-base text-emerald-800">Register as a service partner to list your own business and reach more customers.</p>
+                </div>
+                <button
+                  onClick={() => navigate('/role-selection')}
+                  className="rounded-full bg-emerald-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-emerald-400/30 hover:bg-emerald-700 transition"
+                >
+                  Register as Partner
+                </button>
+              </div>
+            </div>
 
             {business.services && business.services.length > 0 && (
               <div className="mb-10 rounded-[1.5rem] bg-white p-8 shadow-lg border border-cyan-100">
