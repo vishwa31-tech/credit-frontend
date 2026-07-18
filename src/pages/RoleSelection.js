@@ -75,12 +75,28 @@ export default function RoleSelection() {
         <div className="pointer-events-none absolute left-0 bottom-0 h-48 w-48 rounded-full bg-amber-300/15 blur-3xl" />
 
         {/* Header */}
-        <div className="relative text-center mb-12 px-4 py-10 rounded-[2rem] border border-slate-200 bg-white/80 shadow-xl backdrop-blur-xl sm:px-10 sm:py-12">
-          <h1 className="text-4xl sm:text-5xl font-bold text-slate-900 mb-4">Become a Partner</h1>
-          <p className="text-base sm:text-xl text-slate-600 max-w-3xl mx-auto">Choose your role and expand your business opportunities with EventHub, with a responsive application experience for both mobile and desktop.</p>
-          <p className="mt-4 text-sm text-slate-500 max-w-2xl mx-auto">
-            Selecting a service role here means you are registering as a partner. Customers can browse services only on the Services page.
-          </p>
+        <div className="relative overflow-hidden text-center mb-12 px-4 py-10 rounded-[2rem] border border-slate-200 bg-white/90 shadow-2xl shadow-slate-900/10 backdrop-blur-xl sm:px-10 sm:py-12">
+          <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(139,92,246,0.12),_transparent_25%),radial-gradient(circle_at_right,_rgba(6,182,212,0.12),_transparent_20%)]" />
+          <div className="absolute left-4 top-4 h-24 w-24 rounded-full bg-purple-200/40 blur-3xl" />
+          <div className="absolute right-6 bottom-6 h-32 w-32 rounded-full bg-cyan-200/30 blur-3xl" />
+          <div className="relative">
+            <span className="inline-flex items-center rounded-full bg-gradient-to-r from-purple-500 to-fuchsia-500 px-4 py-2 text-sm font-semibold uppercase tracking-[0.3em] text-white shadow-lg shadow-purple-500/20">Partner opportunity</span>
+            <h1 className="mt-6 text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 leading-tight">Grow your event business with a modern partner application.</h1>
+            <p className="mt-6 text-base sm:text-lg text-slate-600 max-w-3xl mx-auto">Register as a service partner and reach customers on a platform designed for mobile and desktop users alike.</p>
+            <p className="mt-4 text-sm text-slate-500 max-w-2xl mx-auto">
+              Selecting a service role here means you are registering as a partner. Customers can browse services only on the Services page.
+            </p>
+          </div>
+          <div className="mt-8 grid gap-3 sm:grid-cols-2">
+            <div className="rounded-[1.5rem] border border-slate-200 bg-slate-50/80 p-5 text-left shadow-sm">
+              <p className="text-sm uppercase tracking-[0.25em] text-slate-500 font-semibold">Designed for creators</p>
+              <p className="mt-3 text-base font-semibold text-slate-900">A clean, mobile-first application experience for vendors.</p>
+            </div>
+            <div className="rounded-[1.5rem] border border-slate-200 bg-slate-50/80 p-5 text-left shadow-sm">
+              <p className="text-sm uppercase tracking-[0.25em] text-slate-500 font-semibold">Flexible roles</p>
+              <p className="mt-3 text-base font-semibold text-slate-900">Choose from catering, photography, venue, décor, and more.</p>
+            </div>
+          </div>
         </div>
 
         {/* Role Grid */}

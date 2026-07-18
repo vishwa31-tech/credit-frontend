@@ -22,14 +22,43 @@ export default function Businesses() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-950 via-cyan-900 to-slate-100 text-slate-900">
       <div className="relative overflow-hidden">
-        <div className="absolute left-0 top-16 h-56 w-56 rounded-full bg-cyan-500/20 blur-3xl" />
-        <div className="absolute right-0 top-8 h-80 w-80 rounded-full bg-violet-500/10 blur-3xl" />
+        <div className="absolute inset-0 -z-10">
+          <div className="absolute left-0 top-10 h-56 w-56 rounded-full bg-cyan-400/25 blur-3xl" />
+          <div className="absolute right-6 top-24 h-72 w-72 rounded-full bg-fuchsia-400/20 blur-3xl" />
+          <div className="absolute left-1/2 bottom-0 h-72 w-72 -translate-x-1/2 rounded-full bg-white/10 blur-3xl" />
+        </div>
 
-        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-          <div className="rounded-[2rem] border border-white/10 bg-gradient-to-r from-cyan-500 via-sky-500 to-indigo-600 p-8 sm:p-12 shadow-2xl shadow-cyan-900/30 text-white">
-            <p className="text-sm uppercase tracking-[0.3em] text-cyan-100 font-bold">Creative service partners</p>
-            <h1 className="mt-6 text-4xl sm:text-5xl lg:text-6xl font-extrabold">Find beautiful vendors for every celebration</h1>
-            <p className="mt-4 max-w-3xl text-base sm:text-lg text-cyan-100/90">Tap into premium catering, photography, venues and décor teams that bring your vision to life on mobile and desktop.</p>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          <div className="grid gap-6 lg:grid-cols-[1.35fr_0.9fr] items-center rounded-[3rem] border border-white/10 bg-slate-950/95 p-6 sm:p-10 shadow-2xl shadow-slate-950/40 overflow-hidden">
+            <div className="space-y-6">
+              <span className="inline-flex items-center rounded-full bg-cyan-500/20 px-4 py-2 text-xs uppercase tracking-[0.35em] font-semibold text-cyan-100">Service showcase</span>
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white">Discover premium event services with a modern, mobile-first experience.</h1>
+              <p className="max-w-2xl text-base sm:text-lg text-slate-300">Browse trusted vendors, compare service categories, and connect with partners using a polished header layout designed for desktop and mobile.</p>
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+                <Link
+                  to="/businesses"
+                  className="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-slate-950 shadow-xl shadow-white/20 hover:bg-slate-100 transition"
+                >
+                  Browse Services
+                </Link>
+                <Link
+                  to="/role-selection"
+                  className="inline-flex items-center justify-center rounded-full border border-white/20 bg-white/10 px-6 py-3 text-sm font-semibold text-white hover:bg-white/15 transition"
+                >
+                  Join as Partner
+                </Link>
+              </div>
+            </div>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="rounded-[1.75rem] border border-white/10 bg-white/10 p-6 shadow-2xl shadow-white/5 backdrop-blur-xl">
+                <p className="text-sm uppercase tracking-[0.25em] text-cyan-100 font-semibold">Fast discovery</p>
+                <p className="mt-4 text-lg font-semibold text-white">Find the right vendor in seconds with structured browsing.</p>
+              </div>
+              <div className="rounded-[1.75rem] border border-white/10 bg-white/10 p-6 shadow-2xl shadow-white/5 backdrop-blur-xl">
+                <p className="text-sm uppercase tracking-[0.25em] text-cyan-100 font-semibold">Trusted partners</p>
+                <p className="mt-4 text-lg font-semibold text-white">Browse verified service providers across every event category.</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
