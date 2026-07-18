@@ -74,6 +74,9 @@ export default function RoleSelection() {
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">Become a Partner</h1>
           <p className="text-xl text-gray-600">Choose your role and expand your business opportunities with EventHub</p>
+          <p className="mt-3 text-sm text-slate-500">
+            Selecting a service role here means you are registering as a partner. Customers can browse services only on the Services page.
+          </p>
         </div>
 
         {/* Role Grid */}

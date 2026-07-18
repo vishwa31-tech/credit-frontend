@@ -53,6 +53,13 @@ export default function BusinessDetail() {
           ← Back to Services
         </button>
 
+        <div className="mb-6 rounded-3xl border border-cyan-200 bg-cyan-50 p-5 text-cyan-900 shadow-sm">
+          <p className="text-base font-semibold">Viewing services only</p>
+          <p className="mt-2 text-sm text-cyan-800">
+            Customers can explore this partner's services here. To become a service provider, register as a partner from the Join as Partner page.
+          </p>
+        </div>
+
         <div className="overflow-hidden rounded-[2rem] bg-white shadow-2xl shadow-cyan-200/40">
           <div className="relative h-96 bg-gradient-to-br from-sky-500 via-cyan-500 to-emerald-500 flex items-center justify-center text-white text-8xl">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(255,255,255,0.18),_transparent_40%)]" />

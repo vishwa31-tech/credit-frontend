@@ -8,6 +8,7 @@ export default function Businesses() {
   const [businesses, setBusinesses] = useState([]);
   const [category, setCategory] = useState('');
   const [loading, setLoading] = useState(true);
+  const [showPopup, setShowPopup] = useState(true);
 
   useEffect(() => {
     businessService.getAll().then(res => {
@@ -32,6 +33,42 @@ export default function Businesses() {
           </div>
         </div>
       </div>
+
+      {showPopup && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/70 p-4">
+          <div className="w-full max-w-xl rounded-[2rem] bg-white p-8 shadow-2xl ring-1 ring-slate-200">
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <p className="text-sm uppercase tracking-[0.3em] text-cyan-500 font-bold">Service browsing only</p>
+                <h2 className="mt-3 text-3xl font-bold text-slate-900">Explore service providers</h2>
+                <p className="mt-4 text-slate-600 leading-relaxed">
+                  Customers can view all services here. If you want to join as a service partner and list your own offerings, register via the Join as Partner page.
+                </p>
+              </div>
+              <button
+                onClick={() => setShowPopup(false)}
+                className="rounded-full bg-slate-800 px-4 py-2 text-white hover:bg-slate-900 transition"
+              >
+                Close
+              </button>
+            </div>
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-end">
+              <button
+                onClick={() => setShowPopup(false)}
+                className="rounded-full bg-slate-200 px-5 py-3 text-sm font-semibold text-slate-800 hover:bg-slate-300 transition"
+              >
+                Continue browsing
+              </button>
+              <a
+                href="/role-selection"
+                className="inline-flex items-center justify-center rounded-full bg-cyan-600 px-5 py-3 text-sm font-semibold text-white hover:bg-cyan-700 transition"
+              >
+                Register as Partner
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className="max-w-6xl mx-auto px-4 pb-16">
         <div className="mt-10 flex flex-wrap gap-3">
