@@ -8,6 +8,18 @@ export default function BusinessDetail() {
   const [business, setBusiness] = useState(null);
   const [reviewComment, setReviewComment] = useState('');
   const [reviewRating, setReviewRating] = useState(5);
+  const [bookingForm, setBookingForm] = useState({
+    serviceName: '',
+    customerName: '',
+    customerEmail: '',
+    customerPhone: '',
+    eventDate: '',
+    eventLocation: '',
+    guestCount: '',
+    budget: '',
+    message: '',
+  });
+  const [bookingLoading, setBookingLoading] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -40,6 +52,48 @@ export default function BusinessDetail() {
         alert('Review added successfully!');
       })
       .catch(err => alert('Failed to add review'));
+  };
+
+  const handleBookService = async (e) => {
+    e.preventDefault();
+    if (!localStorage.getItem('token')) {
+      alert('Please log in to request a service booking.');
+      navigate('/login');
+      return;
+    }
+
+    const requiredFields = ['serviceName', 'customerName', 'customerEmail', 'customerPhone'];
+    const missing = requiredFields.find(field => !bookingForm[field].trim());
+    if (missing) {
+      alert('Please complete the required booking fields.');
+      return;
+    }
+
+    setBookingLoading(true);
+    try {
+      const response = await businessService.bookService(id, {
+        ...bookingForm,
+        guestCount: bookingForm.guestCount ? Number(bookingForm.guestCount) : undefined,
+        budget: bookingForm.budget ? Number(bookingForm.budget) : undefined,
+      });
+
+      alert(response.data?.message || 'Booking request sent successfully.');
+      setBookingForm({
+        serviceName: '',
+        customerName: '',
+        customerEmail: '',
+        customerPhone: '',
+        eventDate: '',
+        eventLocation: '',
+        guestCount: '',
+        budget: '',
+        message: '',
+      });
+    } catch (err) {
+      alert(err.response?.data?.error || 'Unable to submit booking request.');
+    } finally {
+      setBookingLoading(false);
+    }
   };
 
   if (loading) return <div className="text-center py-12">Loading...</div>;
@@ -129,6 +183,112 @@ export default function BusinessDetail() {
                 </div>
               </div>
             )}
+
+            <div className="mb-10 rounded-[1.5rem] bg-amber-50 p-8 shadow-lg border border-amber-200">
+              <h2 className="text-2xl font-semibold text-slate-900 mb-4">Book This Service</h2>
+              <p className="mb-6 text-sm text-slate-600">Your booking request will be sent to the admin for review and will become a lead for follow-up.</p>
+              <form onSubmit={handleBookService} className="grid gap-4 md:grid-cols-2">
+                <div className="md:col-span-2">
+                  <label className="block text-sm font-semibold text-slate-700 mb-2">Service Name *</label>
+                  <input
+                    type="text"
+                    value={bookingForm.serviceName}
+                    onChange={(e) => setBookingForm({ ...bookingForm, serviceName: e.target.value })}
+                    className="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3"
+                    placeholder="e.g. Wedding Catering"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-slate-700 mb-2">Your Name *</label>
+                  <input
+                    type="text"
+                    value={bookingForm.customerName}
+                    onChange={(e) => setBookingForm({ ...bookingForm, customerName: e.target.value })}
+                    className="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-slate-700 mb-2">Email *</label>
+                  <input
+                    type="email"
+                    value={bookingForm.customerEmail}
+                    onChange={(e) => setBookingForm({ ...bookingForm, customerEmail: e.target.value })}
+                    className="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-slate-700 mb-2">Phone *</label>
+                  <input
+                    type="tel"
+                    value={bookingForm.customerPhone}
+                    onChange={(e) => setBookingForm({ ...bookingForm, customerPhone: e.target.value })}
+                    className="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-slate-700 mb-2">Event Date</label>
+                  <input
+                    type="date"
+                    value={bookingForm.eventDate}
+                    onChange={(e) => setBookingForm({ ...bookingForm, eventDate: e.target.value })}
+                    className="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-slate-700 mb-2">Location</label>
+                  <input
+                    type="text"
+                    value={bookingForm.eventLocation}
+                    onChange={(e) => setBookingForm({ ...bookingForm, eventLocation: e.target.value })}
+                    className="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3"
+                    placeholder="City or venue"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-slate-700 mb-2">Guest Count</label>
+                  <input
+                    type="number"
+                    min="1"
+                    value={bookingForm.guestCount}
+                    onChange={(e) => setBookingForm({ ...bookingForm, guestCount: e.target.value })}
+                    className="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-slate-700 mb-2">Budget</label>
+                  <input
+                    type="number"
+                    min="0"
+                    value={bookingForm.budget}
+                    onChange={(e) => setBookingForm({ ...bookingForm, budget: e.target.value })}
+                    className="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3"
+                  />
+                </div>
+                <div className="md:col-span-2">
+                  <label className="block text-sm font-semibold text-slate-700 mb-2">Message</label>
+                  <textarea
+                    rows="4"
+                    value={bookingForm.message}
+                    onChange={(e) => setBookingForm({ ...bookingForm, message: e.target.value })}
+                    className="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3"
+                    placeholder="Tell us more about your event"
+                  />
+                </div>
+                <div className="md:col-span-2">
+                  <button
+                    type="submit"
+                    disabled={bookingLoading}
+                    className="rounded-full bg-amber-600 px-6 py-3 text-sm font-bold uppercase tracking-[0.15em] text-white shadow-xl shadow-amber-500/30 hover:bg-amber-700 transition disabled:opacity-60"
+                  >
+                    {bookingLoading ? 'Submitting...' : 'Send Booking Request'}
+                  </button>
+                </div>
+              </form>
+            </div>
 
             <div className="mb-10 border-t border-slate-200 pt-10">
               <h2 className="text-3xl font-bold text-slate-900 mb-6">Customer Reviews</h2>

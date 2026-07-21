@@ -20,6 +20,7 @@ export const businessService = {
   getById: (id) => axios.get(`${API_BASE}/businesses/${id}`),
   create: (data) => axios.post(`${API_BASE}/businesses`, data, { headers: getAuthHeaders() }),
   addReview: (id, data) => axios.post(`${API_BASE}/businesses/${id}/review`, data, { headers: getAuthHeaders() }),
+  bookService: (id, data) => axios.post(`${API_BASE}/businesses/${id}/book`, data, { headers: getAuthHeaders() }),
 };
 
 export const jobService = {
@@ -39,6 +40,8 @@ export const adminService = {
   getRoleRequests: (status = 'pending') => axios.get(`${API_BASE}/admin/role-requests?status=${status}`, { headers: getAuthHeaders() }),
   approveRoleRequest: (requestId, data) => axios.post(`${API_BASE}/admin/role-requests/${requestId}/approve`, data, { headers: getAuthHeaders() }),
   rejectRoleRequest: (requestId, data) => axios.post(`${API_BASE}/admin/role-requests/${requestId}/reject`, data, { headers: getAuthHeaders() }),
+  getServiceLeads: () => axios.get(`${API_BASE}/admin/service-leads`, { headers: getAuthHeaders() }),
+  updateServiceLeadStatus: (leadId, data) => axios.put(`${API_BASE}/admin/service-leads/${leadId}`, data, { headers: getAuthHeaders() }),
 };
 
 export const newsService = {

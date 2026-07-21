@@ -6,6 +6,7 @@ import RoleRequestManagement from '../components/RoleRequestManagement';
 export default function AdminPanel() {
   const navigate = useNavigate();
   const [dashboard, setDashboard] = useState(null);
+  const [serviceLeads, setServiceLeads] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [activeTab, setActiveTab] = useState('overview');
@@ -14,9 +15,13 @@ export default function AdminPanel() {
   const loadDashboard = () => {
     setLoading(true);
     setError('');
-    return adminService.getDashboard()
-      .then(res => {
-        setDashboard(res.data);
+    return Promise.all([
+      adminService.getDashboard(),
+      adminService.getServiceLeads(),
+    ])
+      .then(([dashboardRes, leadsRes]) => {
+        setDashboard(dashboardRes.data);
+        setServiceLeads(leadsRes.data || []);
         setPanelMessage({ type: '', text: '' });
       })
       .catch(err => {
@@ -81,6 +86,16 @@ export default function AdminPanel() {
               }`}
             >
               Role Requests ({dashboard.counts.pendingRoleRequests || 0})
+            </button>
+            <button
+              onClick={() => setActiveTab('service-leads')}
+              className={`px-6 py-3 font-semibold transition border-b-2 ${
+                activeTab === 'service-leads'
+                  ? 'border-purple-600 text-purple-600'
+                  : 'border-transparent text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              Service Leads ({serviceLeads.filter(lead => lead.status === 'pending').length})
             </button>
           </div>
 
@@ -208,6 +223,30 @@ export default function AdminPanel() {
                   ))}
                 </div>
               </div>
+            </div>
+          )}
+
+          {/* Service Leads Tab */}
+          {activeTab === 'service-leads' && (
+            <div className="space-y-4">
+              {serviceLeads.length > 0 ? serviceLeads.map(lead => (
+                <div key={lead._id} className="rounded-xl border border-gray-200 bg-gray-50 p-5">
+                  <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+                    <div>
+                      <p className="font-semibold text-gray-800">{lead.serviceName}</p>
+                      <p className="text-sm text-gray-600">Customer: {lead.customerName} • {lead.customerEmail}</p>
+                      <p className="text-sm text-gray-600">Business: {lead.businessName || lead.business?.name || 'Unknown'}</p>
+                    </div>
+                    <span className={`rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] ${lead.status === 'pending' ? 'bg-amber-100 text-amber-700' : lead.status === 'approved' ? 'bg-green-100 text-green-700' : 'bg-slate-100 text-slate-700'}`}>
+                      {lead.status}
+                    </span>
+                  </div>
+                  <p className="mt-3 text-sm text-gray-600">Phone: {lead.customerPhone} • Event Date: {lead.eventDate ? new Date(lead.eventDate).toLocaleDateString() : 'N/A'}</p>
+                  {lead.message && <p className="mt-2 text-sm text-gray-600">Message: {lead.message}</p>}
+                </div>
+              )) : (
+                <p className="text-sm text-gray-500">No service booking leads yet.</p>
+              )}
             </div>
           )}
 
