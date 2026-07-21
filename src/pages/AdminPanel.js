@@ -9,7 +9,6 @@ export default function AdminPanel() {
   const [serviceLeads, setServiceLeads] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [activeTab, setActiveTab] = useState('overview');
   const [panelMessage, setPanelMessage] = useState({ type: '', text: '' });
 
   const loadDashboard = () => {
@@ -65,43 +64,12 @@ export default function AdminPanel() {
             </div>
           )}
 
-          {/* Tabs */}
-          <div className="flex gap-4 mb-8 border-b">
-            <button
-              onClick={() => setActiveTab('overview')}
-              className={`px-6 py-3 font-semibold transition border-b-2 ${
-                activeTab === 'overview'
-                  ? 'border-purple-600 text-purple-600'
-                  : 'border-transparent text-gray-600 hover:text-gray-900'
-              }`}
-            >
-              Overview
-            </button>
-            <button
-              onClick={() => setActiveTab('role-requests')}
-              className={`px-6 py-3 font-semibold transition border-b-2 ${
-                activeTab === 'role-requests'
-                  ? 'border-purple-600 text-purple-600'
-                  : 'border-transparent text-gray-600 hover:text-gray-900'
-              }`}
-            >
-              Role Requests ({dashboard.counts.pendingRoleRequests || 0})
-            </button>
-            <button
-              onClick={() => setActiveTab('service-leads')}
-              className={`px-6 py-3 font-semibold transition border-b-2 ${
-                activeTab === 'service-leads'
-                  ? 'border-purple-600 text-purple-600'
-                  : 'border-transparent text-gray-600 hover:text-gray-900'
-              }`}
-            >
-              Service Leads ({serviceLeads.filter(lead => lead.status === 'pending').length})
-            </button>
+          <div className="mb-8 rounded-2xl border border-purple-100 bg-gradient-to-r from-purple-600 to-indigo-600 p-6 text-white">
+            <h2 className="text-2xl font-semibold">Admin Management Board</h2>
+            <p className="mt-2 text-sm text-purple-100">Monitor users, partner approvals, and service booking requests from one place.</p>
           </div>
 
-          {/* Overview Tab */}
-          {activeTab === 'overview' && (
-            <div className="space-y-8">
+          <div className="space-y-8">
               <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <div className="bg-purple-600 text-white rounded-xl p-6 shadow-sm">
                   <p className="text-sm uppercase tracking-[0.2em]">Users</p>
@@ -134,6 +102,33 @@ export default function AdminPanel() {
                 <div className="bg-red-600 text-white rounded-xl p-6 shadow-sm">
                   <p className="text-sm uppercase tracking-[0.2em]">Rejected</p>
                   <p className="text-4xl font-bold mt-3">{dashboard.counts.rejectedRoleRequests || 0}</p>
+                </div>
+              </div>
+
+              <div className="grid gap-6 xl:grid-cols-[1.15fr_0.85fr]">
+                <div className="bg-white rounded-xl shadow-lg p-6">
+                  <h2 className="text-2xl font-semibold text-gray-800 mb-4">Pending Partner Requests</h2>
+                  <RoleRequestManagement onActionComplete={loadDashboard} onMessage={setPanelMessage} />
+                </div>
+
+                <div className="bg-white rounded-xl shadow-lg p-6">
+                  <h2 className="text-2xl font-semibold text-gray-800 mb-4">Pending Service Leads</h2>
+                  <div className="space-y-3">
+                    {serviceLeads.filter(lead => lead.status === 'pending').length > 0 ? serviceLeads.filter(lead => lead.status === 'pending').map(lead => (
+                      <div key={lead._id} className="rounded-lg border border-gray-200 bg-gray-50 p-4">
+                        <div className="flex items-center justify-between gap-3">
+                          <div>
+                            <p className="font-semibold text-gray-800">{lead.serviceName}</p>
+                            <p className="text-sm text-gray-600">{lead.customerName} • {lead.customerEmail}</p>
+                          </div>
+                          <span className="rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-amber-700">Pending</span>
+                        </div>
+                        <p className="mt-2 text-sm text-gray-600">Business: {lead.businessName || lead.business?.name || 'Unknown'}</p>
+                      </div>
+                    )) : (
+                      <p className="text-sm text-gray-500">No pending service booking leads.</p>
+                    )}
+                  </div>
                 </div>
               </div>
 
@@ -224,35 +219,6 @@ export default function AdminPanel() {
                 </div>
               </div>
             </div>
-          )}
-
-          {/* Service Leads Tab */}
-          {activeTab === 'service-leads' && (
-            <div className="space-y-4">
-              {serviceLeads.length > 0 ? serviceLeads.map(lead => (
-                <div key={lead._id} className="rounded-xl border border-gray-200 bg-gray-50 p-5">
-                  <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-                    <div>
-                      <p className="font-semibold text-gray-800">{lead.serviceName}</p>
-                      <p className="text-sm text-gray-600">Customer: {lead.customerName} • {lead.customerEmail}</p>
-                      <p className="text-sm text-gray-600">Business: {lead.businessName || lead.business?.name || 'Unknown'}</p>
-                    </div>
-                    <span className={`rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] ${lead.status === 'pending' ? 'bg-amber-100 text-amber-700' : lead.status === 'approved' ? 'bg-green-100 text-green-700' : 'bg-slate-100 text-slate-700'}`}>
-                      {lead.status}
-                    </span>
-                  </div>
-                  <p className="mt-3 text-sm text-gray-600">Phone: {lead.customerPhone} • Event Date: {lead.eventDate ? new Date(lead.eventDate).toLocaleDateString() : 'N/A'}</p>
-                  {lead.message && <p className="mt-2 text-sm text-gray-600">Message: {lead.message}</p>}
-                </div>
-              )) : (
-                <p className="text-sm text-gray-500">No service booking leads yet.</p>
-              )}
-            </div>
-          )}
-
-          {/* Role Requests Tab */}
-          {activeTab === 'role-requests' && (
-            <RoleRequestManagement onActionComplete={loadDashboard} onMessage={setPanelMessage} />
           )}
         </div>
       </div>
