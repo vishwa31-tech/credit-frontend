@@ -32,13 +32,30 @@ export default function AdminPanel() {
   };
 
   useEffect(() => {
+    const token = localStorage.getItem('token');
     const user = JSON.parse(localStorage.getItem('user') || 'null');
-    if (!localStorage.getItem('token') || user?.role !== 'admin') {
+    
+    if (!token || user?.role !== 'admin') {
       navigate('/admin-login');
       return;
     }
 
-    loadDashboard();
+    // Server-side admin verification
+    adminService.checkAdmin()
+      .then((res) => {
+        if (res.data?.isAdmin) {
+          loadDashboard();
+        } else {
+          localStorage.removeItem('token');
+          localStorage.removeItem('user');
+          navigate('/admin-login');
+        }
+      })
+      .catch(() => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        navigate('/admin-login');
+      });
   }, [navigate]);
 
   if (loading) return <div className="text-center py-16">Loading admin dashboard...</div>;
